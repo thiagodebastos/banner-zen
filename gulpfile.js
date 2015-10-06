@@ -6,15 +6,18 @@ var minifyCSS = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 var browserSync = require('browser-sync');
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['html', 'scripts', 'scripts-vendor', 'css'], function() {
+gulp.task('serve', ['html', 'images', 'scripts', 'scripts-vendor', 'css'], function() {
 
   browserSync.init({
     server: "./build"
   });
 
+  gulp.watch("source/img/*", ['images']);
   gulp.watch("source/stylus/*.styl", ['css']);
   gulp.watch("source/*.html", ['html']);
   gulp.watch("source/js/*.js", ['scripts']);
@@ -43,6 +46,20 @@ gulp.task('scripts', function() {
     .pipe(concat('main.js')) // concat pulls all our files together before minifying them
     // .pipe(uglify())
     .pipe(gulp.dest('build/js'))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
+});
+
+// Copy images from source to build
+gulp.task('images', function() {
+  return gulp.src('source/img/*')
+    .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: true}],
+        use: [pngquant()]
+    }))
+    .pipe(gulp.dest('build/img'))
     .pipe(browserSync.reload({
       stream: true
     }))

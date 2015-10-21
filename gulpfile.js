@@ -46,7 +46,7 @@ gulp.task('serve', ['html', 'images', 'scripts', 'scripts-vendor', 'css'], funct
   });
 
   gulp.watch("source/img/*", ['images']);
-  gulp.watch("source/stylus/*.styl", ['css']);
+  gulp.watch("source/stylus/**/*.styl", ['css']);
   gulp.watch("source/*.html", ['html']);
   gulp.watch("source/js/*.js", ['scripts']);
   gulp.watch("source/js/vendor/*.js", ['scripts-vendor']);

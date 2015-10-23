@@ -1,8 +1,9 @@
 # [![Banner Zen](https://dl.dropboxusercontent.com/u/86789142/cdn/banner-zen/banner-zen-hero_gitlab.png)](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip)
 
+## Overview
 **Banner Zen** is a Banner Starter Kit is a somewhat opinionated boilerplate for HTML5 Rich Banner Development that takes the stress out and peace in. Included are tools for building across Google AdWords, DoubleClick Studio, DoubleClick Rich Media and Sizmek in the most relaxing, peaceful and heartwarming way possible.
 
-## Features
+### Features
 
 > Multi-platform boilerplate
 
@@ -32,7 +33,7 @@ Also, performance-wise Stylus performs really well, and it is natively created i
 Ever been in a situation where a producer, designer, creative, janitor, Bob, Anthony's cat or your Aunty sends an email asking for `thing x` to be moved to the right by `x pixels`, so you do it, zip up the files, send them over and wait an hour for a response? Well, that just wont do. From now on, send them the external link [ which will look something like http://192.168.130.81:7878/] to your current project, get them on the phone if you have to, make the amends and have them watch it happen from their end. No more emails, no more firebreathing, just zen.
 
 
-## Quickstart
+### Quickstart
 - Clone or [download](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip) this repository and build on what is included in the `source` directory.
 - ` git clone git@gitlab.mcsaatchi.com.au:MAKE/html5-banner-starter.git`
 - `cd html5-banner-starter` (or whatever you named the folder)
@@ -40,7 +41,7 @@ Ever been in a situation where a producer, designer, creative, janitor, Bob, Ant
 
 And you are ready to go, run with `gulp` to start the built in HTTP server in a new browser page.
 
-## Workflow
+### Workflow
 - Put on some sound-blocking headphones, and switch to [3 Hours of Healing Zen Music](https://www.youtube.com/watch?v=LGiH6oUDXVg)
 -
 -  
@@ -48,12 +49,12 @@ And you are ready to go, run with `gulp` to start the built in HTTP server in a 
 [I'm working on it!]
 
 
-## Gulp Tasks
-### `gulp css`
+### Gulp Tasks
+#### `gulp css`
 
-### `gulp serve`
+#### `gulp serve`
 
-### `gulp images`
+#### `gulp images`
 Minify images with
 imagemin-pngquant
 imagemin-svgo

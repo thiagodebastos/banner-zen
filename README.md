@@ -1,4 +1,4 @@
-# Banner Zen
+# [![Banner Zen](https://dl.dropboxusercontent.com/u/86789142/cdn/banner-zen/banner-zen-hero.png)](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip)
 
 **Banner Zen** is a Banner Starter Kit is a somewhat opinionated boilerplate for HTML5 Rich Banner Development that takes the stress out and peace in. Included are tools for building across Google AdWords, DoubleClick Studio, DoubleClick Rich Media and Sizmek in the most relaxing, peaceful and heartwarming way possible.
 
@@ -6,7 +6,7 @@
 
 > Multi-platform boilerplate
 
-Akthough a work in progress, this repo aims to contain a major template from each ad provider as listed above. Just swap out bits and pieces. Currently the repo only includes importable stylesheet includes for various banner sizes.
+Although a work in progress, this repo aims to contain a major template from each ad provider as listed above. Just swap out bits and pieces. Currently the repo only includes importable stylesheet includes for various banner sizes.
 
 > Cross-device Synchronisation
 
@@ -33,7 +33,7 @@ Ever been in a situation where a producer, designer, creative, janitor, Bob, Ant
 
 
 ## Quickstart
-- Clone this repository and build on what is included in the `source` directory.
+- Clone or [download](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip) this repository and build on what is included in the `source` directory.
 - ` git clone git@gitlab.mcsaatchi.com.au:MAKE/html5-banner-starter.git`
 - `cd html5-banner-starter` (or whatever you named the folder)
 - `npm install`

@@ -124,7 +124,6 @@ gulp.task('html', function() {
 });
 
 // Delete build directory
-
 gulp.task('clean', function () {
   return del([
     'build/**/*',

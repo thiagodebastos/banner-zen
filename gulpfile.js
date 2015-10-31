@@ -35,11 +35,8 @@ var cssDest = 'build/css';
 // Sripts
 var jsSrc = 'source/js/*.js';
 var jsDest = 'build/js';
-var jsVendorSrc = ['source/js/vendor/jquery*', 'source/js/vendor/*.js'];
+var jsVendorSrc =  'source/js/vendor/*.js';
 var jsVendorDest = 'build/js/vendor';
-
-// Name of ready-to-upload archive
-// var zipName = __dirname.match('^(.*\/)([^\/]*)$')[2] + ".zip";
 
 // Handle errors
 function handleError(err) {
@@ -110,8 +107,6 @@ gulp.task('images', function() {
 gulp.task('scripts-vendor', function() {
   gulp.src(jsVendorSrc)
     .pipe(newer(jsVendorDest))
-    .pipe(concat('vendor.min.js')) // concat pulls all our files together before minifying them
-    .pipe(uglify())
     .pipe(rename('vendor.min.js'))
     .pipe(gulp.dest(jsVendorDest))
     .pipe(browserSync.reload({

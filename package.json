@@ -1,6 +1,6 @@
 {
   "name": "banner-zen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple starter template for working with Stylus",
   "main": "index.js",
   "scripts": {

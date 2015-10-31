@@ -15,6 +15,8 @@ var gifsicle     = require('imagemin-gifsicle');
 var jpegtran     = require('imagemin-jpegtran');
 var browserSync  = require('browser-sync');
 var plumber      = require('gulp-plumber');
+var size         = require('gulp-size');
+var del          = require('del');
 
 // file source and destination variables
 
@@ -37,7 +39,7 @@ var jsVendorSrc = ['source/js/vendor/jquery*', 'source/js/vendor/*.js'];
 var jsVendorDest = 'build/js/vendor';
 
 // Name of ready-to-upload archive
-var zipName = 'archive.zip'
+// var zipName = __dirname.match('^(.*\/)([^\/]*)$')[2] + ".zip";
 
 // Handle errors
 function handleError(err) {
@@ -127,10 +129,19 @@ gulp.task('html', function() {
     }))
 });
 
-// Run all tasks, then create a compressed file archive.zip
+// Delete build directory
+
+gulp.task('clean', function () {
+  return del([
+    'build/**/*',
+  ]);
+});
+
+// Run all tasks, then create a compressed file named after root banner folder
 gulp.task('build',['html', 'images', 'scripts', 'scripts-vendor', 'css'], function(){
   return gulp.src('build/**/*')
-    .pipe(zip(zipName))
+    .pipe(size())
+    .pipe(zip(__dirname.match("^(.*\/)([^\/]*)$")[2] + ".zip"))
     .pipe(gulp.dest('./'));
 });
 

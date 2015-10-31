@@ -60,3 +60,9 @@ imagemin-pngquant
 imagemin-svgo
 imagemin-gifsicle
 imagemin-jpegtran
+
+### Build Guides & Spec Sheets
+- [DoubleClick](https://support.google.com/richmedia/answer/3369501?hl=en&ref_topic=3369390&rd=1)
+- [AdWords](https://support.google.com/adwordspolicy/answer/176108)
+- [Sizmek](https://support.sizmek.com/hc/en-us/categories/200103329-Creating-HTML5-Ads)
+  - Specifically [this link](https://support.sizmek.com/hc/en-us/articles/202732315-HTML5-Formats-and-Features)

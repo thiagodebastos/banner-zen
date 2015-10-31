@@ -103,11 +103,10 @@ gulp.task('images', function() {
     }))
 });
 
-// Concatenate and minify vendor scripts
+// Copy changed vendor scripts to build dir
 gulp.task('scripts-vendor', function() {
   gulp.src(jsVendorSrc)
     .pipe(newer(jsVendorDest))
-    .pipe(rename('vendor.min.js'))
     .pipe(gulp.dest(jsVendorDest))
     .pipe(browserSync.reload({
       stream: true

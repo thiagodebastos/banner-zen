@@ -35,16 +35,17 @@ Ever been in a situation where a producer, designer, creative, janitor, Bob, Ant
 
 ### Quickstart
 - Clone or [download](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip) this repository and build on what is included in the `source` directory.
-- ` git clone git@gitlab.mcsaatchi.com.au:MAKE/html5-banner-starter.git`
-- `cd html5-banner-starter` (or whatever you named the folder)
+- ` git clone git@gitlab.mcsaatchi.com.au:MAKE/banner-zen.git`
+- `cd banner-zen` (or whatever you named the folder)
 - `npm install`
 
 And you are ready to go, run with `gulp` to start the built in HTTP server in a new browser page.
 
 ### Workflow
 - Put on some sound-blocking headphones, and switch to [3 Hours of Healing Zen Music](https://www.youtube.com/watch?v=LGiH6oUDXVg)
--
--  
+- `gulp` will start a HTTP server with browser-sync
+- `gulp clean` will clean out the `build` directory
+- `gulp build` will build the project and create an archive of the project ready for dispatch
 
 [I'm working on it!]
 

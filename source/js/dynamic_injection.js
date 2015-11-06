@@ -7,10 +7,12 @@ document.write('<meta name="ad.size" content="width=' + adWidth + ',height=' + a
 switch (adPlatform) {
   case 'doubleclick':
     document.write('<script src="https://s0.2mdn.net/ads/studio/Enabler.js"></script>');
+    document.write('<script src="js/vendor/doubleclick.js"></script>');
     break;
 
   case 'adwords':
     document.write('<script src="https://tpc.googlesyndication.com/pagead/gadgets/html5/api/exitapi.js"></script>');
+    document.write('<script src="js/vendor/adwords.js"></script>');
     break;
 
   case 'sizmek':

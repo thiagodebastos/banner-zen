@@ -1,36 +1,41 @@
 // JavaScript Document
 //HTML5 Ad Template JS from DoubleClick by Google
 
-//Declaring elements from the HTML i.e. Giving them Instance Names like in Flash - makes it easier
-var container;
-var content;
-var bgExit;
+var container_dc;
+var content_dc;
+var exitBtn;
 
-//Function to run with any animations starting on load, or bringing in images etc
-init = function() {
 
-  //Assign All the elements to the element on the page
-  container = document.getElementById('container_dc');
-  content = document.getElementById('content_dc');
-  bgExit = document.getElementById('background_exit_dc');
 
-  //Bring in listeners i.e. if a user clicks or rollsover
-  addListeners();
-  //Show Ad
-  container.style.display = "block";
+dcrmInit = function(){
+
+  container_dc = document.getElementById('container_dc');
+  content_dc   = document.getElementById('content_dc');
+  exitBtn    = document.getElementById('background_exit_dc');
+
+	// Added Listeners
+	addListeners();
+
 }
 
 
-//Add Event Listeners
-addListeners = function() {
-  bgExit.addEventListener('click', bgExitHandler, false);
+addListeners = function (){
+	exitBtn.addEventListener('click', onExitHandler, false);
 }
 
-bgExitHandler = function(e) {
-  //Call Exits
-  // Enabler.exit('HTML5_Background_Clickthrough');
 
-  //AdWords Click
-  ExitApi.exit();
-  console.log('Exit code Initialized');
+
+onExitHandler = function(e){
+	Enabler.exit('HTML5_Background_Clickthrough');
+}
+
+
+
+window.onload = function() {
+  /* Initialize Enabler */
+  if (Enabler.isInitialized()) {
+    dcrmInit();
+  } else {
+    Enabler.addEventListener(studio.events.StudioEvent.INIT, dcrmInit);
+  }
 }

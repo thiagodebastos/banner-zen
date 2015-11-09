@@ -1,11 +1,11 @@
 'use strict';
 
-var gulp        = require('gulp'),
-    $           = require('gulp-load-plugins')({pattern:'*'}),
-    del         = require('del'),
-    runSequence = require('run-sequence'),
-    browserSync = require('browser-sync'),
-    reload      = browserSync.reload;
+var gulp         = require('gulp'),
+  $              = require('gulp-load-plugins')({pattern: '*'}),
+  del            = require('del'),
+  runSequence    = require('run-sequence'),
+  browserSync    = require('browser-sync'),
+  reload         = browserSync.reload;
 
 // file source and destination variables
 
@@ -33,6 +33,18 @@ function handleError(err) {
   this.emit('end');
 }
 
+var AUTOPREFIXER_BROWSERS = [
+  'ie >= 10',
+  'ie_mob >= 10',
+  'ff >= 30',
+  'chrome >= 34',
+  'safari >= 7',
+  'opera >= 23',
+  'ios >= 7',
+  'android >= 4.4',
+  'bb >= 10'
+];
+
 // Static Server + watching stylus/html/js/image files
 gulp.task('serve', ['build'], function() {
 
@@ -51,14 +63,16 @@ gulp.task('serve', ['build'], function() {
 // Compile Stylus into CSS, add vendor prefixes & auto-inject into browser
 gulp.task('css', function() {
   return gulp.src(cssSrc)
-    .pipe($.plumber({ errorHandler: handleError }))
+    .pipe($.plumber({
+      errorHandler: handleError
+    }))
     .pipe($.newer(cssDest))
     .pipe($.stylus({
       compress: false,
       paths: ['source/stylus']
     }))
     .pipe($.autoprefixer({
-      browsers: ['last 4 versions', 'ie 8', 'ie 9']
+      browsers: [AUTOPREFIXER_BROWSERS]
     }))
     .pipe($.rename('master.css'))
     .pipe(gulp.dest(cssDest))
@@ -81,14 +95,18 @@ gulp.task('images', function() {
   return gulp.src(imgSrc)
     .pipe($.newer(imgDest))
     .pipe($.imagemin({
-        optimizationLevel: 7,
-        progressive: true,
-        interlaced: true,
-        multipass: true,
-        svgoPlugins: [{removeViewBox: true}]
+      optimizationLevel: 7,
+      progressive: true,
+      interlaced: true,
+      multipass: true,
+      svgoPlugins: [{
+        removeViewBox: true
+      }]
     }))
     .pipe(gulp.dest(imgDest))
-    .pipe($.size({title: 'images'}));
+    .pipe($.size({
+      title: 'images'
+    }));
 });
 
 // Copy changed vendor scripts to build dir
@@ -115,11 +133,13 @@ gulp.task('html', function() {
 //     $.del(['build/'] );
 // });
 
-gulp.task('clean', del.bind(null, 'build/*', {dot: true}));
+gulp.task('clean', del.bind(null, 'build/*', {
+  dot: true
+}));
 
 gulp.task('build', function(callback) {
   runSequence('clean', ['html', 'images', 'scripts', 'scripts-vendor', 'css'],
-                      callback);
+    callback);
 });
 
 gulp.task('default', ['serve']);

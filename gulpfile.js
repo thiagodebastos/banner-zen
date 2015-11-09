@@ -1,41 +1,30 @@
-var gulp         = require('gulp');
+'use strict';
 
-var stylus       = require('gulp-stylus');
-var autoprefixer = require('gulp-autoprefixer');
-var minifyCSS    = require('gulp-minify-css');
-var uglify       = require('gulp-uglify');
-var rename       = require('gulp-rename');
-var concat       = require('gulp-concat');
-var imagemin     = require('gulp-imagemin');
-var newer        = require('gulp-newer');
-var zip          = require('gulp-zip');
-var pngquant     = require('imagemin-pngquant');
-var svgo         = require('imagemin-svgo');
-var gifsicle     = require('imagemin-gifsicle');
-var jpegtran     = require('imagemin-jpegtran');
-var browserSync  = require('browser-sync');
-var plumber      = require('gulp-plumber');
-var size         = require('gulp-size');
-var del          = require('del');
+var gulp        = require('gulp'),
+    $           = require('gulp-load-plugins')({pattern:'*'}),
+    del         = require('del'),
+    runSequence = require('run-sequence'),
+    browserSync = require('browser-sync'),
+    reload      = browserSync.reload;
 
 // file source and destination variables
 
 // HTML files
-var htmlSrc = 'source/**/*.html';
-var htmlDest = 'build';
+var htmlSrc      = 'source/**/*.html';
+var htmlDest     = 'build';
 
 // Images
-var imgSrc = 'source/img/**';
-var imgDest = 'build/img';
+var imgSrc       = 'source/img/**/*';
+var imgDest      = 'build/img';
 
 // Stylesheets
-var cssSrc = 'source/stylus/*.styl';
-var cssDest = 'build/css';
+var cssSrc       = 'source/stylus/*.styl';
+var cssDest      = 'build/css';
 
 // Sripts
-var jsSrc = 'source/js/*.js';
-var jsDest = 'build/js';
-var jsVendorSrc =  'source/js/vendor/*.js';
+var jsSrc        = 'source/js/*.js';
+var jsDest       = 'build/js';
+var jsVendorSrc  = 'source/js/vendor/*.js';
 var jsVendorDest = 'build/js/vendor';
 
 // Handle errors
@@ -45,13 +34,14 @@ function handleError(err) {
 }
 
 // Static Server + watching stylus/html/js/image files
-gulp.task('serve', ['html', 'images', 'scripts', 'scripts-vendor', 'css'], function() {
+gulp.task('serve', ['build'], function() {
 
   browserSync.init({
+    notify: false,
     server: "./build"
   });
 
-  gulp.watch("source/img/*", ['images']);
+  gulp.watch("source/img/**/*", ['images'], reload);
   gulp.watch("source/stylus/**/*.styl", ['css']);
   gulp.watch("source/*.html", ['html']);
   gulp.watch("source/js/*.js", ['scripts']);
@@ -61,81 +51,75 @@ gulp.task('serve', ['html', 'images', 'scripts', 'scripts-vendor', 'css'], funct
 // Compile Stylus into CSS, add vendor prefixes & auto-inject into browser
 gulp.task('css', function() {
   return gulp.src(cssSrc)
-    .pipe(plumber({ errorHandler: handleError }))
-    .pipe(newer(cssDest))
-    .pipe(stylus({
+    .pipe($.plumber({ errorHandler: handleError }))
+    .pipe($.newer(cssDest))
+    .pipe($.stylus({
       compress: false,
       paths: ['source/stylus']
     }))
-    .pipe(autoprefixer({
+    .pipe($.autoprefixer({
       browsers: ['last 4 versions', 'ie 8', 'ie 9']
     }))
-    .pipe(rename('master.css'))
+    .pipe($.rename('master.css'))
     .pipe(gulp.dest(cssDest))
     .pipe(browserSync.stream());
 });
 
 // Concatenate scripts (we don't minify these)
 gulp.task('scripts', function() {
-  gulp.src(jsSrc)
-    .pipe(newer(jsSrc))
-    .pipe(concat('main.js')) // concat pulls all our files together before minifying them
+  return gulp.src(jsSrc)
+    .pipe($.newer(jsSrc))
+    .pipe($.concat('main.js')) // concat pulls all our files together before minifying them
     .pipe(gulp.dest(jsDest))
-    .pipe(browserSync.reload({
+    .pipe(reload({
       stream: true
-    }))
+    }));
 });
 
 // Copy and optimise images from source to build
 gulp.task('images', function() {
   return gulp.src(imgSrc)
-    .pipe(newer(imgDest))
-    .pipe(imagemin({
-        optimizationLevel: 5,
+    .pipe($.newer(imgDest))
+    .pipe($.imagemin({
+        optimizationLevel: 7,
         progressive: true,
         interlaced: true,
-        svgoPlugins: [{removeViewBox: true}],
-        use: [pngquant(), gifsicle(), svgo(), jpegtran()]
+        multipass: true,
+        svgoPlugins: [{removeViewBox: true}]
     }))
     .pipe(gulp.dest(imgDest))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
+    .pipe($.size({title: 'images'}));
 });
 
 // Copy changed vendor scripts to build dir
 gulp.task('scripts-vendor', function() {
-  gulp.src(jsVendorSrc)
-    .pipe(newer(jsVendorDest))
+  return gulp.src(jsVendorSrc)
+    .pipe($.newer(jsVendorDest))
     .pipe(gulp.dest(jsVendorDest))
-    .pipe(browserSync.reload({
+    .pipe($.browserSync.reload({
       stream: true
-    }))
+    }));
 });
 
 // copy all html files to output directory
 gulp.task('html', function() {
-  gulp.src('source/*.html')
-    .pipe(newer(htmlDest))
+  return gulp.src('source/*.html')
+    .pipe($.newer(htmlDest))
     .pipe(gulp.dest('build'))
-    .pipe(browserSync.reload({
+    .pipe($.browserSync.reload({
       stream: true
-    }))
+    }));
 });
 
-// Delete build directory
-gulp.task('clean', function () {
-  return del([
-    'build/**/*',
-  ]);
-});
+// gulp.task('clean', function() {
+//     $.del(['build/'] );
+// });
 
-// Run all tasks, then create a compressed file named after root banner folder
-gulp.task('build',['html', 'images', 'scripts', 'scripts-vendor', 'css'], function(){
-  return gulp.src('build/**/*')
-    .pipe(size())
-    .pipe(zip(__dirname.match("^(.*\/)([^\/]*)$")[2] + ".zip"))
-    .pipe(gulp.dest('./'));
+gulp.task('clean', del.bind(null, 'build/*', {dot: true}));
+
+gulp.task('build', function(callback) {
+  runSequence('clean', ['html', 'images', 'scripts', 'scripts-vendor', 'css'],
+                      callback);
 });
 
 gulp.task('default', ['serve']);

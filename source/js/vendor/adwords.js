@@ -28,7 +28,7 @@ addListeners = function() {
 
 bgExitHandler = function(e) {
   //Call Exits
-  // Enabler.exit('HTML5_Background_Clickthrough');
+  // Enabler.exit();
 
   //AdWords Click
   ExitApi.exit();

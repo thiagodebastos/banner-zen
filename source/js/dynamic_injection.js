@@ -1,6 +1,6 @@
-var adWidth = '';
-var adHeight = '';
-var adPlatform = 'adtech';
+var adWidth = '300';
+var adHeight = '250';
+var adPlatform = 'adwords';
 
 switch (adPlatform) {
   case 'doubleclick':

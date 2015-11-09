@@ -44,8 +44,7 @@ And you are ready to go, run with `gulp` to start the built in HTTP server in a 
 ### Workflow
 - Put on some sound-blocking headphones, and switch to [3 Hours of Healing Zen Music](https://www.youtube.com/watch?v=LGiH6oUDXVg)
 - `gulp` will start a HTTP server with browser-sync
-- `gulp clean` will clean out the `build` directory
-- `gulp build` will build the project and create an archive of the project ready for dispatch
+- `gulp build` will clean the build directory and then build the project and create an archive of the project ready for dispatch
 
 [I'm working on it!]
 

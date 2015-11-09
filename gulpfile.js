@@ -68,12 +68,10 @@ gulp.task('css', function() {
     }))
     .pipe($.newer(cssDest))
     .pipe($.stylus({
-      compress: false,
+      compress: true,
       paths: ['source/stylus']
     }))
-    .pipe($.autoprefixer({
-      browsers: [AUTOPREFIXER_BROWSERS]
-    }))
+    .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe($.rename('master.css'))
     .pipe(gulp.dest(cssDest))
     .pipe(browserSync.stream());

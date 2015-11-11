@@ -1,6 +1,6 @@
 var adWidth = '300';
 var adHeight = '250';
-var adPlatform = 'doubleclick';
+var adPlatform = 'adwords';
 
 switch (adPlatform) {
   case 'doubleclick':
@@ -17,7 +17,7 @@ switch (adPlatform) {
 
   case 'sizmek':
     document.write('\
-    <script src="http://ds.serving-sys.com/BurstingScript/adKit/adkit.js"></script>\
+    <script src="https://secure-ds.serving-sys.com/BurstingScript/EBLoader.js"></script>\
     <script src="js/vendor/sizmek.js"></script>');
     break;
 

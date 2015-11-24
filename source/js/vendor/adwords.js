@@ -1,36 +1,27 @@
 // JavaScript Document
 //HTML5 Ad Template JS from DoubleClick by Google
 
-//Declaring elements from the HTML i.e. Giving them Instance Names like in Flash - makes it easier
-var container;
-var content;
 var bgExit;
 
 //Function to run with any animations starting on load, or bringing in images etc
 init = function() {
-
-  //Assign All the elements to the element on the page
-  container = document.getElementById('container_dc');
-  content = document.getElementById('content_dc');
-  bgExit = document.getElementById('background_exit_dc');
-
-  //Bring in listeners i.e. if a user clicks or rollsover
+  "use strict";
+  bgExit = document.getElementById("ad");
   addListeners();
-  //Show Ad
-  container.style.display = "block";
-}
+  // TODO: @thiago fix this bug
+  // animation();
+};
 
-
-//Add Event Listeners
 addListeners = function() {
-  bgExit.addEventListener('click', bgExitHandler, false);
-}
+  "use strict";
+  addEventListener("click", bgExitHandler, false);
+};
 
-bgExitHandler = function(e) {
-  //Call Exits
-  // Enabler.exit();
-
+bgExitHandler = function() {
+  "use strict";
   //AdWords Click
   ExitApi.exit();
-  console.log('Exit code Initialized');
-}
+  console.log("Exit code Initialized");
+};
+
+window.onload = init();

@@ -9,12 +9,15 @@ function initEB() {
 }
 
 function startAd() {
-  adDiv = document.getElementById("ad");
+  adDiv = document.getElementById("banner");
+
   addEventListeners();
+  animation();
+
 }
 
 function addEventListeners() {
-  document.getElementById("ad").addEventListener("click", clickthrough);
+  document.getElementById("banner").addEventListener("click", clickthrough);
   //document.getElementById("user-action-button").addEventListener("click", userActionCounter);
 }
 

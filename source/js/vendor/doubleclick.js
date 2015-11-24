@@ -1,41 +1,29 @@
 // JavaScript Document
 //HTML5 Ad Template JS from DoubleClick by Google
 
-var container_dc;
-var content_dc;
-var exitBtn;
+var adDiv;
+// var exitBtn;
 
+startAd = function(){
 
-
-dcrmInit = function(){
-
-  container_dc = document.getElementById('container_dc');
-  content_dc   = document.getElementById('content_dc');
-  exitBtn    = document.getElementById('background_exit_dc');
-
-	// Added Listeners
+  adDiv = document.getElementById('ad');
+  // exitBtn    = document.getElementById('background_exit_dc');
 	addListeners();
-
 }
-
 
 addListeners = function (){
-	exitBtn.addEventListener('click', onExitHandler, false);
+	adDiv.addEventListener('click', onExitHandler, false);
 }
-
-
 
 onExitHandler = function(e){
 	Enabler.exit('HTML5_Background_Clickthrough');
 }
 
-
-
 window.onload = function() {
   /* Initialize Enabler */
   if (Enabler.isInitialized()) {
-    dcrmInit();
+    startAd();
   } else {
-    Enabler.addEventListener(studio.events.StudioEvent.INIT, dcrmInit);
+    Enabler.addEventListener(studio.events.StudioEvent.INIT, startAd);
   }
 }

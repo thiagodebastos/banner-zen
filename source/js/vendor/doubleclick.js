@@ -1,23 +1,21 @@
-// JavaScript Document
-//HTML5 Ad Template JS from DoubleClick by Google
+var bgExit;
 
-var adDiv;
-// var exitBtn;
+startAd = function() {
+  "use strict";
+    bgExit = document.getElementById("ad");
+  addListeners();
+};
 
-startAd = function(){
+addListeners = function() {
+  "use strict";
+  bgExit.addEventListener('click', onExitHandler, false);
+};
 
-  adDiv = document.getElementById('ad');
-  // exitBtn    = document.getElementById('background_exit_dc');
-	addListeners();
-}
-
-addListeners = function (){
-	adDiv.addEventListener('click', onExitHandler, false);
-}
-
-onExitHandler = function(e){
-	Enabler.exit('HTML5_Background_Clickthrough');
-}
+onExitHandler = function(e) {
+  "use strict";
+  Enabler.exit('HTML5_Background_Clickthrough');
+  console.log("Exit code Initialized");
+};
 
 window.onload = function() {
   /* Initialize Enabler */
@@ -26,4 +24,4 @@ window.onload = function() {
   } else {
     Enabler.addEventListener(studio.events.StudioEvent.INIT, startAd);
   }
-}
+};

@@ -1,10 +1,6 @@
-// JavaScript Document
-//HTML5 Ad Template JS from DoubleClick by Google
-
 var bgExit;
 
-//Function to run with any animations starting on load, or bringing in images etc
-init = function() {
+startAd = function() {
   "use strict";
   bgExit = document.getElementById("ad");
   addListeners();
@@ -14,14 +10,13 @@ init = function() {
 
 addListeners = function() {
   "use strict";
-  addEventListener("click", bgExitHandler, false);
+  addEventListener("click", onExitHandler, false);
 };
 
-bgExitHandler = function() {
+onExitHandler = function(e) {
   "use strict";
-  //AdWords Click
   ExitApi.exit();
   console.log("Exit code Initialized");
 };
 
-window.onload = init();
+window.onload = startAd();

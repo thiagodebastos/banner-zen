@@ -54,8 +54,8 @@ gulp.task('serve', ['build'], function() {
 
   gulp.watch("source/img/**/*", ['images'], reload);
   gulp.watch("source/stylus/**/*.styl", ['css']);
-  gulp.watch("source/pages/*.+(html|nunjucks)", ['nunjucks']);
-  gulp.watch("source/templates/*.+(html|nunjucks)", ['nunjucks']);
+  gulp.watch("source/pages/*.html", ['nunjucks']);
+  gulp.watch("source/templates/*.nunjucks", ['nunjucks']);
   gulp.watch("source/js/*.js", ['scripts']);
   gulp.watch("source/js/vendor/*.js", ['scripts-vendor']);
 });
@@ -115,11 +115,16 @@ gulp.task('scripts-vendor', function() {
     }));
 });
 
+
 // compile nunjucks templates
 $.nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false});
 gulp.task('nunjucks', function() {
   return gulp.src(nunjucksSrc)
     .pipe($.plumber({errorHandler: handleError}))
+    // add data nunjucksRender
+    .pipe($.data(function() {
+      return require('./source/data.json')
+    }))
     .pipe($.nunjucksRender())
     .pipe(gulp.dest('build'))
     .pipe($.browserSync.reload({

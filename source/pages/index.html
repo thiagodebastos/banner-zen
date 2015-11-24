@@ -1,19 +1,13 @@
-<!-- index.nunjucks -->
 {% extends "layout.nunjucks" %}
+{% block config %}
+  <title>Page Title</title>
+  <script src="js/vendor/zepto.min.js"></script>
+  <script src="{{adWords.enabler}}"></script>
+  <script src="{{adWords.script}}"></script>
+  <script src="js/main.js" type="text/javascript"></script>
+{% endblock %}
+
 {% block banner %}
 {# create your banner in here #}
-
-<!-- Call JS Initial Function when below has loaded in -->
-<!-- NOTE if adwords <a href="javascript:window.open(window.clickTag)"> -->
-<div id="container_dc">
-  <div id="content_dc">
-    <div class="main" id="container">
-      <!-- your ad's HTML goes inside here -->
-
-    </div>
-  </div>
-</div>
-</div>
-<button id="background_exit_dc"></button>
 
 {% endblock %}

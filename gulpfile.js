@@ -54,7 +54,8 @@ gulp.task('serve', ['build'], function() {
 
   gulp.watch("source/img/**/*", ['images'], reload);
   gulp.watch("source/stylus/**/*.styl", ['css']);
-  gulp.watch("source/*.html", ['html']);
+  gulp.watch("source/pages/*.+(html|nunjucks)", ['nunjucks']);
+  gulp.watch("source/templates/*.+(html|nunjucks)", ['nunjucks']);
   gulp.watch("source/js/*.js", ['scripts']);
   gulp.watch("source/js/vendor/*.js", ['scripts-vendor']);
 });
@@ -62,9 +63,7 @@ gulp.task('serve', ['build'], function() {
 // Compile Stylus into CSS, add vendor prefixes & auto-inject into browser
 gulp.task('css', function() {
   return gulp.src(cssSrc)
-    .pipe($.plumber({
-      errorHandler: handleError
-    }))
+    .pipe($.plumber({errorHandler: handleError}))
     .pipe($.newer(cssDest))
     .pipe($.stylus({
       compress: true,
@@ -120,7 +119,7 @@ gulp.task('scripts-vendor', function() {
 $.nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false});
 gulp.task('nunjucks', function() {
   return gulp.src(nunjucksSrc)
-    .pipe($.newer(htmlDest))
+    .pipe($.plumber({errorHandler: handleError}))
     .pipe($.nunjucksRender())
     .pipe(gulp.dest('build'))
     .pipe($.browserSync.reload({
@@ -137,7 +136,7 @@ gulp.task('clean', del.bind(null, 'build/*', {
 }));
 
 gulp.task('build', function(callback) {
-  runSequence('clean', ['html', 'images', 'scripts', 'scripts-vendor', 'css'],
+  runSequence('clean', ['nunjucks', 'images', 'scripts', 'scripts-vendor', 'css'],
     callback);
 });
 

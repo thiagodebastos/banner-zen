@@ -9,9 +9,8 @@ var gulp         = require('gulp'),
 
 // file source and destination variables
 
-// HTML files
-var htmlSrc      = 'source/**/*.html';
-var htmlDest     = 'build';
+// HTML & nunjucks files
+var nunjucksSrc  = 'source/pages/**/*.+(html|nunjucks)';
 
 // Images
 var imgSrc       = 'source/img/**/*';
@@ -117,10 +116,12 @@ gulp.task('scripts-vendor', function() {
     }));
 });
 
-// copy all html files to output directory
-gulp.task('html', function() {
-  return gulp.src('source/*.html')
+// compile nunjucks templates
+$.nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false});
+gulp.task('nunjucks', function() {
+  return gulp.src(nunjucksSrc)
     .pipe($.newer(htmlDest))
+    .pipe($.nunjucksRender())
     .pipe(gulp.dest('build'))
     .pipe($.browserSync.reload({
       stream: true

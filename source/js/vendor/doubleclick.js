@@ -2,8 +2,9 @@ var bgExit;
 
 startAd = function() {
   "use strict";
-    bgExit = document.getElementById("ad");
+  bgExit = document.getElementById("ad");
   addListeners();
+  animation();
 };
 
 addListeners = function() {

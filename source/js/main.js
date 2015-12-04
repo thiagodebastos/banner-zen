@@ -1,3 +1,1 @@
-function animation(){
-  // custom animation script goes here
-}
+// call animation function below

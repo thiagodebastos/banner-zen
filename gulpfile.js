@@ -9,9 +9,8 @@ var gulp         = require('gulp'),
 
 // file source and destination variables
 
-// HTML files
-var htmlSrc      = 'source/**/*.html';
-var htmlDest     = 'build';
+// HTML & nunjucks files
+var nunjucksSrc  = 'source/pages/**/*.+(html|nunjucks)';
 
 // Images
 var imgSrc       = 'source/img/**/*';
@@ -55,7 +54,8 @@ gulp.task('serve', ['build'], function() {
 
   gulp.watch("source/img/**/*", ['images'], reload);
   gulp.watch("source/stylus/**/*.styl", ['css']);
-  gulp.watch("source/*.html", ['html']);
+  gulp.watch("source/pages/*.html", ['nunjucks']);
+  gulp.watch("source/templates/*.nunjucks", ['nunjucks']);
   gulp.watch("source/js/*.js", ['scripts']);
   gulp.watch("source/js/vendor/*.js", ['scripts-vendor']);
 });
@@ -63,9 +63,7 @@ gulp.task('serve', ['build'], function() {
 // Compile Stylus into CSS, add vendor prefixes & auto-inject into browser
 gulp.task('css', function() {
   return gulp.src(cssSrc)
-    .pipe($.plumber({
-      errorHandler: handleError
-    }))
+    .pipe($.plumber({errorHandler: handleError}))
     .pipe($.newer(cssDest))
     .pipe($.stylus({
       compress: true,
@@ -117,10 +115,17 @@ gulp.task('scripts-vendor', function() {
     }));
 });
 
-// copy all html files to output directory
-gulp.task('html', function() {
-  return gulp.src('source/*.html')
-    .pipe($.newer(htmlDest))
+
+// compile nunjucks templates
+$.nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false});
+gulp.task('nunjucks', function() {
+  return gulp.src(nunjucksSrc)
+    .pipe($.plumber({errorHandler: handleError}))
+    // add data nunjucksRender
+    .pipe($.data(function() {
+      return require('./source/data.json')
+    }))
+    .pipe($.nunjucksRender())
     .pipe(gulp.dest('build'))
     .pipe($.browserSync.reload({
       stream: true
@@ -136,7 +141,7 @@ gulp.task('clean', del.bind(null, 'build/*', {
 }));
 
 gulp.task('build', function(callback) {
-  runSequence('clean', ['html', 'images', 'scripts', 'scripts-vendor', 'css'],
+  runSequence('clean', ['nunjucks', 'images', 'scripts', 'scripts-vendor', 'css'],
     callback);
 });
 

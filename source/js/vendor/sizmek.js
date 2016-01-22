@@ -1,4 +1,29 @@
-var adDiv;
+var bgExit;
+
+startAd = function() {
+  "use strict";
+  bgExit = document.getElementById("ad");
+  addListeners();
+  animation();
+};
+
+addListeners = function() {
+  "use strict";
+  document.getElementById("ad").addEventListener("click", onExitHandler);
+};
+
+onExitHandler = function(e) {
+  "use strict";
+  EB.onExitHandler();
+  console.log('onExitHandler');
+};
+
+function userActionCounter() {
+  EB.userActionCounter("CustomInteraction");
+  console.log('custom interaction');
+};
+
+window.addEventListener("load", initEB);
 
 function initEB() {
   if (!EB.isInitialized()) {
@@ -6,26 +31,4 @@ function initEB() {
   } else {
     startAd();
   }
-}
-
-function startAd() {
-  adDiv = document.getElementById("ad");
-  addEventListeners();
-}
-
-function addEventListeners() {
-  document.getElementById("ad").addEventListener("click", clickthrough);
-  //document.getElementById("user-action-button").addEventListener("click", userActionCounter);
-}
-
-function clickthrough() {
-  EB.clickthrough();
-  console.log('clickthrough');
-}
-
-function userActionCounter() {
-  EB.userActionCounter("CustomInteraction");
-  console.log('custom interaction');
-}
-
-window.addEventListener("load", initEB);
+};

@@ -1,34 +1,27 @@
-var bgExit;
+function initEB() {
+    if (!EB.isInitialized()) {
+        EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
+    } else {
+        startAd();
+    }
+}
 
-startAd = function() {
-  "use strict";
-  bgExit = document.getElementById("ad");
-  addListeners();
-  animation();
-};
+function startAd() {
+    const adDiv = document.getElementById("ad");
+    addEventListeners();
+    console.log('[custom] ad initialised');
+    animation();
+}
 
-addListeners = function() {
-  "use strict";
-  document.getElementById("ad").addEventListener("click", onExitHandler);
-};
+function addEventListeners() {
+    document.getElementById("ad").addEventListener("click", clickthrough);
+}
 
-onExitHandler = function(e) {
-  "use strict";
-  EB.onExitHandler();
-  console.log('onExitHandler');
-};
+function clickthrough() {
+    EB.clickthrough();
+    console.log('[custom] Clickthrough Initiated');
 
-function userActionCounter() {
-  EB.userActionCounter("CustomInteraction");
-  console.log('custom interaction');
-};
+}
+
 
 window.addEventListener("load", initEB);
-
-function initEB() {
-  if (!EB.isInitialized()) {
-    EB.addEventListener(EBG.EventName.EB_INITIALIZED, startAd);
-  } else {
-    startAd();
-  }
-};

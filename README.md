@@ -5,6 +5,10 @@
 
 ### Features
 
+> Latest Ecmascript [ES6] Features
+
+Practice the basics of ES6 today!
+
 > Multi-platform boilerplate
 
 Although a work in progress, this repo aims to contain a major template from each ad provider as listed above. Just swap out bits and pieces. Currently the repo only includes importable stylesheet includes for various banner sizes.

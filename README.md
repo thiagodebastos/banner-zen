@@ -54,16 +54,15 @@ And you are ready to go, run with `gulp` to start the built in HTTP server in a 
 
 
 ### Gulp Tasks
-#### `gulp css`
+#### `npm run gulp -- build`
+Clean `build` dir and rebuild project.
 
-#### `gulp serve`
+#### `npm run gulp`
+Build project and initialise BrowserSync session which will open a new tab and
+live reload in that tab.
 
 #### `gulp images`
-Minify images with
-imagemin-pngquant
-imagemin-svgo
-imagemin-gifsicle
-imagemin-jpegtran
+Minify images with: imagemin-pngquant, imagemin-svgo, imagemin-gifsicle, imagemin-jpegtran
 
 ### Build Guides & Spec Sheets
 - [DoubleClick](https://support.google.com/richmedia/answer/3369501?hl=en&ref_topic=3369390&rd=1)

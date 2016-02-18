@@ -19,10 +19,10 @@ import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
 import uglify from 'gulp-uglify';
 import zip from 'gulp-zip';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminJpegtran from 'imagemin-jpegtran';
-import imageminPngquant from 'imagemin-pngquant';
-import imageminSvgo from 'imagemin-svgo';
+import gifsicle from 'imagemin-gifsicle';
+import jpegtran from 'imagemin-jpegtran';
+import pngquant from 'imagemin-pngquant';
+import svgo from 'imagemin-svgo';
 
 // file source and destination variables
 
@@ -118,9 +118,8 @@ gulp.task('images', () => {
       progressive: true,
       interlaced: true,
       multipass: true,
-      svgoPlugins: [{
-        removeViewBox: true
-      }]
+      svgoPlugins: [{ removeViewBox: false }],
+      use: [pngquant(), jpegtran(), gifsicle()]
     }))
     .pipe(gulp.dest(imgDest))
     .pipe(size({

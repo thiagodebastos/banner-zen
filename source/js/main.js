@@ -16,7 +16,7 @@ const animation = () => {
     onCompleteParams: ["end"]
   });
 
-  // IMPORT CONTROL MODULE
+  // CONTROL MODULE FUNCTIOn
   ControlModule(tl);
   // ANIMATION CODE
   tl.addLabel("frame01")

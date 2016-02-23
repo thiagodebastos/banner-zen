@@ -9,7 +9,8 @@ function ControlModule (tl) {
   function createBtn(btnTxt){
     const newBtn = document.createElement("button");
     const t = document.createTextNode(btnTxt);
-    newBtn.appendChild(t);
+    newBtn.appendChild(t)
+    newBtn.setAttribute("id", `${btnTxt}_btn`);
     return animationControls.appendChild(newBtn);
   }
 

@@ -1,4 +1,4 @@
-# [![Banner Zen](https://dl.dropboxusercontent.com/u/86789142/cdn/banner-zen/banner-zen-hero_gitlab.png)](https://gitlab.mcsaatchi.com.au/MAKE/banner-zen/repository/archive.zip)
+# [![Banner Zen](https://dl.dropboxusercontent.com/u/86789142/cdn/banner-zen/banner-zen-hero_gitlab.png)](https://github.com/thiagodebastos/banner-zen/archive/master.zip)
 
 ## Overview
 **Banner Zen** is a Banner Starter Kit is a somewhat opinionated boilerplate for HTML5 Rich Banner Development that takes the stress out and peace in. Included are tools for building across Google AdWords, DoubleClick Studio, DoubleClick Rich Media and Sizmek in the most relaxing, peaceful and heartwarming way possible.

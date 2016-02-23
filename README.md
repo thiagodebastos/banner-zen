@@ -64,7 +64,12 @@ live reload in that tab.
 #### `gulp images`
 Minify images with: imagemin-pngquant, imagemin-svgo, imagemin-gifsicle, imagemin-jpegtran
 
-### Build Guides & Spec Sheets
+## [GreenSock](http://greensock.com/) Guides
+- [Jump Start](https://greensock.com/jump-start-js)
+- [Ease Visualizer](http://greensock.com/ease-visualizer)
+- [TimeLine Lite Tuts&plus; Guide](http://code.tutsplus.com/tutorials/timelinelite-ultimate-starter-guide-working-with-labels--active-10240)
+
+### Ad Platform Build Guides & Spec Sheets
 - [DoubleClick](https://support.google.com/richmedia/answer/3369501?hl=en&ref_topic=3369390&rd=1)
   - [How to prepare HTML5 assets for DCM] (https://support.google.com/dcm/partner/answer/3145300?hl=en&vid=1-635790097211926859-3253088437#1&2&2a&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17)
   - [Hosted libraries](https://support.google.com/richmedia/answer/6307288?hl=en)

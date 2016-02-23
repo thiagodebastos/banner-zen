@@ -1,11 +1,11 @@
 {
   "name": "banner-zen",
-  "version": "1.0.0",
-  "description": "A simple starter template for working with Stylus",
+  "version": "1.0.1",
+  "description": "A simple starter template for working with Stylus, GreenSock,  BrowserSync and Gulp",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp"
+    "dev": "gulp",
+    "build": "gulp build"
   },
   "keywords": [
     "css",
@@ -14,10 +14,11 @@
     "css3",
     "banners",
     "es6",
+    "greensock",
     "rich media"
   ],
   "author": "Thiago de Bastos",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-preset-es2015": "^6.5.0",
     "browser-sync": "^2.9.7",

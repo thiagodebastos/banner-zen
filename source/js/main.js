@@ -7,6 +7,7 @@ const animation = () => {
   }
   const tl = new TimelineMax({
     repeat: 0,
+    paused: true,
     yoyo: false,
     repeatDelay: 3,
     onStart: timelineProgress,
@@ -15,11 +16,15 @@ const animation = () => {
     onCompleteParams: ["end"]
   });
 
-
+  // IMPORT CONTROL MODULE
+  ControlModule(tl);
   // ANIMATION CODE
   tl.addLabel("frame01")
 
-
+  tl.staggerTo('[class^=box]', 0.25, {backgroundColor: "yellow"}, 0.1)
+  tl.staggerTo('[class^=box]', 0.25, {backgroundColor: "lime"}, 0.1)
+  tl.staggerTo('[class^=box]', 0.25, {backgroundColor: "blue"}, 0.1)
+  tl.staggerTo('[class^=box]', 0.75, {x: 250, backgroundColor: "tomato"}, 0.25)
 
   // ANIMATION DURATION REPORTING
   console.log(`[custom] loop duration: ${tl.duration()}s`);

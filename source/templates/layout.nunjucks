@@ -11,6 +11,7 @@
 <body>
   <!-- Call JS Initial Function when below has loaded in -->
   <!-- NOTE if adwords <a href="javascript:window.open(window.clickTag)"> -->
+  {% block controls %} {% endblock %}
   <div id="ad">
     <div id="banner">
       <div class="main" id="container">

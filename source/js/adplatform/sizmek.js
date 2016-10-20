@@ -1,16 +1,22 @@
-//Anything you need to do on initiation of the MediaMind code should be put here
-function onInit() {
+var bgExit;
 
-}
+startAd = function() {
+  "use strict";
+  bgExit = document.getElementById("ad");
+  addListeners();
+  // TODO: @thiago fix this bug
+  // animation();
+};
 
-//Custom Interaction
-function customInt() {
-	EB.userActionCounter("InteractionName");
-}
+addListeners = function() {
+  "use strict";
+  addEventListener("click", onExitHandler, false);
+};
 
-//Clickthrough handler
-function clickMe(){
-	EB.clickthrough();
+onExitHandler = function(e) {
+  "use strict";
+  ExitApi.exit();
+  console.log("Exit code Initialized");
+};
 
-    console.log('Clickthrough');
-}
+window.onload = startAd();

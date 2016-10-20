@@ -1,19 +1,62 @@
 {% extends "layout.nunjucks" %}
+
 {% block config %}
-  <title>Page Title</title>
-  <script src="{{dcStudio.enabler}}"></script>
-  <script src="{{dcStudio.script}}"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
-  <script src="js/main.js" type="text/javascript"></script>
-{% endblock %}
+<title></title>
+<!-- /*<style>*{margin:0;} canvas{background-color:white; display:block; border: 1px solid grey;}</style>*/ -->
+{% endblock config %}
 
 {% block controls %}
-<div id="animationControls">
-</div>
-{% endblock %}
+<!-- <div id="animationControls"></div> -->
+{% endblock controls%}
 
 {% block banner %}
-<!-- create your banner in here -->
+
+<span class="guide--h"></span>
+<span class="guide--v"></span>
+<a href="javascript:clickMe();">
+    <canvas id="bannerCanvas" width="300" height="50"></canvas>
+</a>
+
+{% endblock banner %}
+
+{% block scripts %}
 
 
-{% endblock %}
+  <!-- Ad Platform Includes and clicktags-->
+  <script src="{{enabler}}"></script>
+  <!-- build:js js/behaviour.js -->
+    <script type="text/javascript" src="../js/adplatform/sizmek.js"></script>
+  <!-- endbuild -->
+
+  <script type="text/javascript">
+      if (!EB.isInitialized()) {
+          EB.addEventListener(EBG.EventName.EB_INITIALIZED, onInit);
+      } else {
+          onInit();
+      }
+  </script>
+
+
+  {# Load easeljs and greensock from CDN in production or local files in dev #}
+  <!-- Animation frameworks -->
+  {% for link in cdn %}
+    <script src="{{link}}"></script>
+  {% endfor %}
+
+  <!-- Playback Controls -->
+  <!-- build:js js/app/modules.js -->
+  <script type="text/javascript" src="../js/app/modules.js"></script>
+  <!-- endbuild -->
+
+  <!-- Animation Modules -->
+  <!-- build:js js/app/animation.js -->
+  <script src="../js/app/Banner.js"></script>
+  <script src="../js/app/Frame.js"></script>
+  <script src="../js/app/Frame1.js"></script>
+  <script src="../js/app/Frame2.js"></script>
+  <script src="../js/app/Frame3.js"></script>
+
+  <script src="../js/app/main.js"></script>
+  <!-- endbuild -->
+
+{% endblock scripts %}

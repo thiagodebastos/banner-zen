@@ -2,3 +2,18 @@
 
 09-11-2015 no longer need to run `gulp clean` before each build and serve as
 this is now done automatically
+
+---------------------
+
+##TODO:
+
+###Gulp Workflow
+- [ ] Simplify the generation of multiple banner sizes and variants.
+- [ ] Pass in data to each variant, eg size in the title tag.
+- [ ]
+
+###Banner Development
+- [ ] Make use of canvas.
+- [ ] Break frames down into separate modules.
+- [ ] Create a base `Frame` class.
+- [ ] Abstract all animation config into one location.

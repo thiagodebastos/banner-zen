@@ -1,170 +1,240 @@
-'use strict';
+/*sourceType: module*/
+'use strict'
+// *************************************
+//
+//   Gulpfile
+//
+// *************************************
+//
+// Available tasks:
+//   `gulp`
+//   `gulp serve`
+//   `gulp compile:babel`
+//   `gulp compile:postcss`
+//   `gulp minify:css`
+//   `gulp minify:js`
+//
+// *************************************
 
-import gulp from 'gulp';
-import autoprefixer from 'gulp-autoprefixer';
-import babel from 'gulp-babel';
-import browserSync from 'browser-sync';
-import concat from 'gulp-concat';
-import data from 'gulp-data';
-import del from 'del';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import imagemin from 'gulp-imagemin';
-import newer from 'gulp-newer';
-import nunjucksRender from 'gulp-nunjucks-render';
-import plumber from 'gulp-plumber';
-import rename from 'gulp-rename';
-import runSequence from 'run-sequence';
-import size from 'gulp-size';
-import sourcemaps from 'gulp-sourcemaps';
-import stylus from 'gulp-stylus';
-import uglify from 'gulp-uglify';
-import zip from 'gulp-zip';
-import gifsicle from 'imagemin-gifsicle';
-import jpegtran from 'imagemin-jpegtran';
-import pngquant from 'imagemin-pngquant';
-import svgo from 'imagemin-svgo';
+import gulp from 'gulp'
+import gulpLoadPlugins from 'gulp-load-plugins'
+const $ = gulpLoadPlugins()
+
+import autoprefixer from 'autoprefixer'
+import browserSync from 'browser-sync'
+import del from 'del'
+import nunjucksRender from 'gulp-nunjucks-render'
+import runSequence from 'run-sequence'
+import precss from 'precss'
+import cssnano from 'cssnano'
+import gifsicle from 'imagemin-gifsicle'
+import jpegtran from 'imagemin-jpegtran'
+import pngquant from 'imagemin-pngquant'
+import chalk from 'chalk'
+import svgo from 'imagemin-svgo'
+
+const reload = browserSync.reload
+
+// Set up environments
+const tasks = {
+    development: ['serve'],
+    production: ['build']
+}
+
+// Console Colors
+const cErr = chalk.red
+  ,cInfo = chalk.dim.gray
+  ,cTask = chalk.bold.green
 
 // file source and destination variables
 
 // HTML & nunjucks files
-const nunjucksSrc  = 'source/pages/**/*.+(html|nunjucks)';
+const nunjucksSrc  = 'source/pages/**/*.+(html|nunjucks)'
 
 // Images
-const imgSrc       = 'source/img/**/*';
-const imgDest      = 'build/img';
+const imgSrc       = 'source/img/**/*'
+const imgDest      = 'build/img'
 
 // Stylesheets
-const cssSrc       = 'source/stylus/*.styl';
-const cssDest      = 'build/css';
+const cssSrc       = 'source/css/*.pcss'
+const cssDest      = 'build/css'
 
 // Sripts
-const jsSrc        = 'source/js/*.js';
-const jsDest       = 'build/js';
-const jsVendorSrc  = 'source/js/vendor/*.js';
-const jsVendorDest = 'build/js/vendor';
+// const jsSrc        = 'source/js/*.js';
+// const jsDest       = 'build/js';
+const jsVendorSrc  = 'source/js/vendor/*.js'
+const jsVendorDest = 'build/js/vendor'
 
 // Handle errors
 function handleError(err) {
-  console.log(err.toString());
-  this.emit('end');
+    console.log(cErr(err.toString()))
+    this.emit('end')
 }
 
-var AUTOPREFIXER_BROWSERS = [
-  'ie >= 12',
-  'ie_mob >= 10',
-  'ff >= 30',
-  'chrome >= 34',
-  'safari >= 7',
-  'opera >= 23',
-  'ios >= 7',
-  'android >= 4.4',
-  'bb >= 10'
-];
-
-// Static Server + watching stylus/html/js/image files
-gulp.task('serve', ['build'], () => {
-
-  browserSync({
-    server: {
-       baseDir: './build'
+const options = {
+    build : {},
+    localServerConfig: {
+        server: { baseDir: './build'}
+    ,open: false
+    ,notify: false
     },
-    notify: false
-  });
+    images: {
+        optimizationLevel: 7
+        ,progressive: true
+        ,interlaced: true
+        ,multipass: true
+        ,svgoPlugins: [{ removeViewBox: false }]
+        ,use: [pngquant(), jpegtran(), gifsicle()]
+    },
+    js : {},
+    css : {
+        processors: {
+            dev: [precss],
+            prod: [
+                precss,
+                autoprefixer({browsers: ['last 2 versions']}),
+                cssnano
+            ]
+        }
+    }
+}
 
-  gulp.watch("source/img/**/*", ['images'], browserSync.reload);
-  gulp.watch("source/stylus/**/*.styl", ['css']);
-  gulp.watch("source/pages/*.html", ['nunjucks']);
-  gulp.watch("source/templates/*.nunjucks", ['nunjucks']);
-  gulp.watch("source/js/*.js", ['scripts']);
-  gulp.watch("source/js/vendor/*.js", ['scripts-vendor']);
-});
+// -------------------------------------
+//   Task: Serve
+// -------------------------------------
 
-// Compile Stylus into CSS, add vendor prefixes & auto-inject into browser
-gulp.task('css', () => {
-  return gulp.src(cssSrc)
-    .pipe(plumber({errorHandler: handleError}))
-    .pipe(newer(cssDest))
-    .pipe(stylus({
-      compress: true,
-      paths: ['source/stylus']
-    }))
-    .pipe(autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .pipe(rename('master.css'))
+gulp.task('serve', ['build:dev'], () => {
+    browserSync(options.localServerConfig)
+
+    gulp.watch('source/img/**/*', ['images'], reload)
+    gulp.watch('source/css/**/*.pcss', ['styles'])
+    gulp.watch([
+        'source/templates/*.nunjucks'
+      ,'source/js/**/*.js'
+      ,'source/pages/*.html'
+      ,'source/data/*.json'
+    ], ['html'])
+  // gulp.watch("source/pages/*.html", ['html']);
+  // gulp.watch("source/js/**/*.js", ['html']);
+})
+
+// -------------------------------------
+//   Task: Styles
+// -------------------------------------
+
+gulp.task('styles', () => {
+    return gulp.src(cssSrc)
+    .pipe($.plumber({errorHandler: handleError}))
+    .pipe($.newer(cssDest))
+    .pipe($.environments.development($.sourcemaps.init()))
+    .pipe($.environments.development($.postcss(options.css.processors.dev)))
+    .pipe($.environments.production($.postcss(options.css.processors.prod)))
+    .pipe($.environments.development($.sourcemaps.write('.')))
+    .pipe($.rename('master.css'))
     .pipe(gulp.dest(cssDest))
-    .pipe(browserSync.stream());
-});
+    .pipe(browserSync.stream())
+})
 
-// Concatenate scripts (we don't minify these)
+
+// -------------------------------------
+//   Task: Scripts
+// -------------------------------------
 
 gulp.task('scripts', () => {
-  return gulp.src(jsSrc)
-    .pipe(plumber())
-    .pipe(newer(jsSrc))
-    .pipe(sourcemaps.init())
-    .pipe(babel())
-    .pipe(plumber.stop())
-    .pipe(concat('main.js')) // concat pulls all our files together before minifying them
-    .pipe(sourcemaps.write('.'))
+    return gulp.src(jsSrc)
+    .pipe($.plumber())
+    .pipe($.newer(jsSrc))
+    .pipe($.environments.development($.sourcemaps.init()))
+    .pipe($.babel())
+    .pipe($.plumber.stop())
+    .pipe($.concat('main.js')) // concat pulls all our files together before minifying them
+    .pipe($.environments.development($.sourcemaps.write('.')))
     .pipe(gulp.dest(jsDest))
-    .pipe(browserSync.reload({stream: true}));
-});
+    .pipe(reload({stream: true}))
+})
 
-// Copy and optimise images from source to build
-gulp.task('images', () => {
-  return gulp.src(imgSrc)
-    .pipe(newer(imgDest))
-    .pipe(imagemin({
-      optimizationLevel: 7,
-      progressive: true,
-      interlaced: true,
-      multipass: true,
-      svgoPlugins: [{ removeViewBox: false }],
-      use: [pngquant(), jpegtran(), gifsicle()]
-    }))
-    .pipe(gulp.dest(imgDest))
-    .pipe(size({
-      title: 'images'
-    }));
-});
+// -------------------------------------
+//   Task: Scripts:dev
+// -------------------------------------
 
-// Copy changed vendor scripts to build dir
-gulp.task('scripts-vendor', () => {
-  return gulp.src(jsVendorSrc)
-    .pipe(newer(jsVendorDest))
+gulp.task('scripts:dev', () => {
+    return gulp.src(jsVendorSrc)
     .pipe(gulp.dest(jsVendorDest))
-    .pipe(browserSync.reload({
-      stream: true
-    }));
-});
+    .pipe(reload({stream: true}))
+})
 
+// -------------------------------------
+//   Task: Images
+// -------------------------------------
 
-// compile nunjucks templates
-nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false});
-gulp.task('nunjucks', () => {
-  return gulp.src(nunjucksSrc)
-    .pipe(plumber({errorHandler: handleError}))
-    // add data nunjucksRender
-    .pipe(data(() => {
-      return require('./source/data.json')
-    }))
+gulp.task('images', () => {
+    return gulp.src(imgSrc)
+    .pipe($.newer(imgDest))
+    .pipe($.environments.production($.imagemin(options.images)))
+    .pipe(gulp.dest(imgDest))
+    .pipe($.size({ title: 'images'}))
+})
+
+// -------------------------------------
+//   Task: HTML
+// -------------------------------------
+
+nunjucksRender.nunjucks.configure(['source/templates/'], {watch: false})
+gulp.task('html', () => {
+  // Use hosted CDN for production and local files during dev
+    const dataSource = $.environments.production() ?
+    './source/data/data.cdn.json' : './source/data/data.dev.json'
+    return gulp.src(nunjucksSrc)
+    .pipe($.plumber({errorHandler: handleError}))
+    .pipe($.data(() => { return require(dataSource) }))
     .pipe(nunjucksRender())
+    .pipe($.useref())
+    .pipe($.if('*.js', $.babel()))
     .pipe(gulp.dest('build'))
-    .pipe(browserSync.reload({
-      stream: true
-    }));
-});
+    .pipe(reload({stream: true}))
+    .pipe($.size({ title: 'html' }))
+})
 
-// gulp.task('clean', () => {
-//     $.del(['build/'] );
-// });
+// -------------------------------------
+//   Task: Clean
+// -------------------------------------
 
 gulp.task('clean', del.bind(null, 'build/*', {
-  dot: true
-}));
+    dot: true
+}))
+
+// NOTE: old task before using gulp-useref
+// gulp.task('build', (callback) => {
+//   runSequence('clean', ['nunjucks', 'images', 'scripts', 'scripts-vendor', 'styles'],
+//     callback);
+// });
+
+// -------------------------------------
+//   Task: Build
+// -------------------------------------
 
 gulp.task('build', (callback) => {
-  runSequence('clean', ['nunjucks', 'images', 'scripts', 'scripts-vendor', 'css'],
-    callback);
-});
+    runSequence('clean', ['html', 'scripts:dev', 'images', 'styles'], 'zip',
+    callback)
+})
 
-gulp.task('default', ['serve']);
+gulp.task('zip', () => {
+    return gulp.src('build/*')
+        .pipe($.zip('archive.zip'))
+        .pipe(gulp.dest('dispatch'))
+})
+
+// -------------------------------------
+//   Task: Build:dev
+// -------------------------------------
+
+gulp.task('build:dev', (callback) => {
+    runSequence('clean', ['html', 'images', 'styles', 'scripts:dev'],
+    callback)
+})
+
+// -------------------------------------
+//   Task: Default
+// -------------------------------------
+
+gulp.task('default', tasks[process.env.NODE_ENV])

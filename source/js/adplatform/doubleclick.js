@@ -13,15 +13,6 @@ function init() {
   }
 }
 
-// Runs when the page is completely loaded.
-function show(){
-  // Add your code to load creative assets or begin creative animation.
-  animation.playMain()
-  ControlModule()
-}
-
-function bgExitHandler(e) {
-  Enabler.exit('Background Exit')
-}
+const bgExitHandler = (e) => Enabler.exit('Background Exit')
 
 document.getElementById('ad').addEventListener('click', bgExitHandler, false)

@@ -54,9 +54,9 @@ function ControlModule () {
 
 
   // control timeline with all the buttons
-  function playHandler(){ animation.tlMain.play();}
-  function pauseHandler(){ animation.tlMain.pause();}
-  function resumeHandler(){ animation.tlMain.resume();}
-  function reverseHandler(){ animation.tlMain.reverse();}
-  function restartHandler(){ animation.tlMain.restart();}
+  function playHandler(){ animation().tlMain.play();}
+  function pauseHandler(){ animation().tlMain.pause();}
+  function resumeHandler(){ animation().tlMain.resume();}
+  function reverseHandler(){ animation().tlMain.reverse();}
+  function restartHandler(){ animation().tlMain.restart();}
 }

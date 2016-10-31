@@ -1,9 +1,8 @@
 {
-  "enabler": "https://secure-ds.serving-sys.com/BurstingScript/EBLoader.js",
-  "cdn": [
-      "js/vendor/easeljs-0.8.2.min.js",
-      "js/vendor/TweenLite.min.js",
-      "js/vendor/TimelineLite.min.js",
-      "js/vendor/easepack.min.js"
-  ]
+  "doubleclick": {
+    "enabler": "https://s0.2mdn.net/ads/studio/Enabler.js",
+    "cdn": [
+      "js/vendor/TweenMax.min.js"
+    ]
+  }
 }

@@ -4,10 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    {% block config %} {% endblock %}   
+    {% block config %} {% endblock %}
 </head>
 
-<body onLoad="init();">
+<body>
     {% block controls %} {% endblock %}
 
     {% block banner %} {% endblock %}

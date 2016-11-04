@@ -203,12 +203,6 @@ gulp.task('clean', del.bind(null, 'build/*', {
     dot: true
 }))
 
-// NOTE: old task before using gulp-useref
-// gulp.task('build', (callback) => {
-//   runSequence('clean', ['nunjucks', 'images', 'scripts', 'scripts-vendor', 'styles'],
-//     callback);
-// });
-
 // -------------------------------------
 //   Task: Build
 // -------------------------------------

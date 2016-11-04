@@ -30,7 +30,7 @@ const animation = (() => {
     }
 
     /*
-    * FRAME 01
+    * FRAME 02
     */
     const frame02 = () => {
         console.log('[animation] Frame 02')
@@ -40,7 +40,7 @@ const animation = (() => {
     }
 
     /*
-    * FRAME 01
+    * FRAME 03
     */
     const frame03 = () => {
         console.log('[animation] Frame 03')

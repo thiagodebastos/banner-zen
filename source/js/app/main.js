@@ -39,9 +39,21 @@ const animation = (() => {
         return tl
     }
 
+    /*
+    * FRAME 01
+    */
+    const frame03 = () => {
+        console.log('[animation] Frame 03')
+        const tl = new TimelineMax()
 
-    masterTL.add(frame01())
-    // .add(frame02())
+        return tl
+    }
+
+    // Cache frames - This results in frames executing between tl.onStart and tl.onComplete
+    const frames = [frame01, frame02, frame03]
+
+    // Add cached frames to timeline
+    masterTL.add(frames)
 
     return {
         tlMain : masterTL,

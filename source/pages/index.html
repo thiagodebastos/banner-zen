@@ -11,11 +11,13 @@
 
 {% block banner %}
 
+<!-- Helpers which can be toggle on or off in utilities.pcss
+  They act like rulers in Photoshop -->
 <span class="guide--h"></span>
 <span class="guide--v"></span>
 
 <div id="ad">
-
+<!-- Ad code goes in here -->
 
 
 </div>
@@ -23,9 +25,6 @@
 {% endblock banner %}
 
 {% block scripts %}
-
-
-
 
   <!-- Animation frameworks
     NOTE: includes all links specified in data/*.json -->
@@ -47,8 +46,8 @@
     NOTE: Choose the ad platform enabler here. -->
   <script src="{{doubleclick.enabler}}"></script>
   <!-- build:js js/behaviour.js -->
-    <script type="text/javascript" src="../js/adplatform/behaviour.js"></script>
-    <script type="text/javascript" src="../js/adplatform/doubleclick.js"></script>
+  <script type="text/javascript" src="../js/adplatform/behaviour.js"></script>
+  <script type="text/javascript" src="../js/adplatform/doubleclick.js"></script>
   <!-- endbuild -->
 
 {% endblock scripts %}

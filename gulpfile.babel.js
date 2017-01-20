@@ -213,8 +213,8 @@ gulp.task('build', (callback) => {
 })
 
 gulp.task('zip', () => {
-    return gulp.src('build/*')
-        .pipe($.zip('archive.zip'))
+    return gulp.src('build/**/*')
+        .pipe($.zip(`${require('path').basename(__dirname)}.zip`))
         .pipe(gulp.dest('dispatch'))
 })
 

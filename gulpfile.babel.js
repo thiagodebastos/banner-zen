@@ -20,6 +20,7 @@ import gulp from 'gulp'
 import gulpLoadPlugins from 'gulp-load-plugins'
 const $ = gulpLoadPlugins()
 
+import path from 'path'
 import autoprefixer from 'autoprefixer'
 import browserSync from 'browser-sync'
 import del from 'del'
@@ -110,9 +111,9 @@ gulp.task('serve', ['build:dev'], () => {
     gulp.watch('source/css/**/*.pcss', ['styles'])
     gulp.watch([
         'source/templates/*.nunjucks'
-      ,'source/js/**/*.js'
-      ,'source/pages/*.html'
-      ,'source/data/*.json'
+        ,'source/js/**/*.js'
+        ,'source/pages/*.html'
+        ,'source/data/*.json'
     ], ['html'])
   // gulp.watch("source/pages/*.html", ['html']);
   // gulp.watch("source/js/**/*.js", ['html']);
@@ -214,7 +215,7 @@ gulp.task('build', (callback) => {
 
 gulp.task('zip', () => {
     return gulp.src('build/**/*')
-        .pipe($.zip(`${require('path').basename(__dirname)}.zip`))
+        .pipe($.zip(`${path.basename(__dirname)}.zip`))
         .pipe(gulp.dest('dispatch'))
 })
 
